@@ -1,0 +1,10 @@
+FROM python:2.7-alpine
+
+WORKDIR /opt/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY x.py job.py
+
+CMD [ "python", "job.py" ]
