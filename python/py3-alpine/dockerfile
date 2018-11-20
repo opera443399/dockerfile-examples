@@ -1,0 +1,17 @@
+FROM python:3.6-alpine
+
+ENV PYTHONUNBUFFERED 1
+
+RUN apk add --no-cache openssl-dev \
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+
+COPY requirements.txt /
+RUN pip install --no-cache-dir -r /requirements.txt
+
+RUN addgroup -S www && adduser -S -D www -G www
+USER www
+COPY ./src /app
+
+EXPOSE 5000
+WORKDIR /app
+CMD [ "python", "/app/run.py" ]
