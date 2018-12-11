@@ -1,0 +1,15 @@
+setup.template.name: "filebeat"
+setup.template.pattern: "filebeat-*"
+
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/app/*.log
+
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  username: "admin"
+  password: "admin"
+  index: filebeat-%{+yyyy.MM.dd}
+  
