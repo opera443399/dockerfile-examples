@@ -1,0 +1,61 @@
+version: "3.3"
+networks:
+  net:
+    driver: overlay
+    attachable: true
+
+services:
+  #
+  gateway:
+    image: demo:v1
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    networks:
+      - net
+    ports:
+      - 5000:80
+    environment:
+      deploy_env: prod
+
+  #
+  svc1:
+    image: demo:v1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    networks:
+      - net
+    ports:
+      - 5001:80
+    environment:
+      deploy_env: prod
+
+  #
+  svc2:
+    image: demo:v1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    networks:
+      - net
+    ports:
+      - 5002:80
+    environment:
+      deploy_env: prod
+
